@@ -1,0 +1,7 @@
+{
+  "presets": [
+    ["es2015", { "modules": false }],
+  ],
+  "plugins": ["transform-runtime", ["component", [{ "libraryName": "ct-adc", "style": false, "libDir":"component"}]]],
+  "comments": false
+}
