@@ -2,20 +2,14 @@
 
 ## 使用
 
-从npm安装`ct-adc`
+从npm安装`ct-adc-list`
 ```
-npm install ct-adc
+npm install ct-adc-list
 ```
 在代码中引用
 ```
-import adc from 'ct-adc';
-Vue.use(adc)
-```
-或
-```
-import adc from 'ct-adc';
-import {List} from 'ct-adc'
-Vue.component(autoComplete.name,autoComplete);
+import List from 'ct-adc-list';
+Vue.component(List.name,List);
 ```
 ## 参数说明
 

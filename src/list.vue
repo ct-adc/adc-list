@@ -22,7 +22,9 @@
             </tr>
         </template>
         <template v-else-if="!responseStatus">
-            <td :colspan="colspan" class="text-center">请求出错!</td>
+            <tr>
+                <td :colspan="colspan" class="text-center">请求出错!</td>
+            </tr>
         </template>
         <template v-else>
             <tr v-if="data.length===0">
