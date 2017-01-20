@@ -2,16 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>list</title>
+    <title>adc</title>
     <link href="http://static.tcy365.com/cdn/bootstrap/3.3.5/css/bootstrap.dz.min.css" rel="stylesheet">
     <link href="http://static.tcy365.com/cdn/bootstrap/3.3.5/css/theme.css" rel="stylesheet">
   </head>
   <body>
-    <div id="app"></div>
+
+    <div id="list">
+      <list :data="data" :theads="theads" :loading="loading" :response-status="responseStatus" :config="config" :operations="operations"></list>
+    </div>
+
+
+    <div id="td">
+      <td-img :img-src="imgSrc"></td-img>
+    </div>
+
     <script src="http://static.tcy365.com/cdn/jquery/2.1.0/jquery.js"></script>
     <script src="http://static.tcy365.com/cdn/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="http://static.tcy365.com/cdn/component/popover-confirm/1.2.0/popover-confirm-umd.js"></script>
-    <script src="http://static.tcy365.com/cdn/component/miniMsg/1.3.0/script/miniMsg-umd.js"></script>
-    <script src="/asset/index.bundle.js"></script>
+    <script src="http://static.tcy365.com/cdn/bootstrap-page/1.0.0/page.min.js"></script>
+    <script src="/asset/simple.bundle.js"></script>
   </body>
 </html>

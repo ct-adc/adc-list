@@ -2,9 +2,9 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  context: path.resolve(__dirname, "./src/js/app"),
+  context: path.resolve(__dirname, "./example"),
   entry: {
-    index:'./index.js'
+    simple:'./simple/index.js'
   },
   output: {
     path: path.resolve(__dirname, './asset'),
