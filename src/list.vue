@@ -33,7 +33,8 @@
             <tr v-for="(item,index) in data">
                 <td v-for="thead in theads">
                     <!--config是一个自定义函数 接收参数为:该处的原始value值/该项数据/该项数据在原数组中的索引-->
-                    <span v-if="typeof config[thead.key]==='function'" v-html="config[thead.key](item[thead.key],item,index)">
+                    <span v-if="typeof config[thead.key]==='function'"
+                          v-html="config[thead.key](item[thead.key],item,index)">
                     </span>
                     <!--config是一个对象，其中定义了某个值应该被显示出来的真正内容-->
                     <span v-else-if="renderByConfigItem(item,thead.key)"
@@ -42,12 +43,13 @@
                     </span>
                     <!--td的显示内容需要使用公用的filter-->
                     <template v-else-if="renderByFilter(thead.key,thead.filter)">
-                            {{item[thead.key] | privateFilter(thead.filter,index)}}
+                        {{item[thead.key] | privateFilter(thead.filter,index)}}
                     </template>
 
                     <template v-else-if="typeof thead.component!=='undefined' && thead.component.name==='img'">
                         <template v-if="typeof thead.component.props!=='undefined'">
-                            <td-img :img-src="item[thead.key]" :width="thead.component.props.width" :height="thead.component.props.height"></td-img>
+                            <td-img :img-src="item[thead.key]" :width="thead.component.props.width"
+                                    :height="thead.component.props.height"></td-img>
                         </template>
                         <template v-else>
                             <td-img :img-src="item[thead.key]"></td-img>
@@ -59,8 +61,9 @@
                         {{item[thead.key]}}
                     </template>
                 </td>
-                <td>
-                    <template v-for="operation in operations">
+
+                <template v-for="operation in operations">
+                    <td>
                         <a v-if="(typeof operation.displayFilter==='function' && operation.displayFilter(JSON.parse(JSON.stringify(item)))) || typeof operation.displayFilter==='undefined'"
                            class="btn btn-xs"
                            style="margin-right:5px"
@@ -68,11 +71,13 @@
                            :target="operation.linkToNew ? '_blank' : ''"
                            :class="operation.className"
                            @click="operation.action(JSON.parse(JSON.stringify(item)))">
-                            <span v-if="operation.icon!==''" class="glyphicon" :class="'glyphicon-'+operation.icon"></span>
+                            <span v-if="operation.icon!==''" class="glyphicon"
+                                  :class="'glyphicon-'+operation.icon"></span>
                             {{operation.text}}
                         </a>
-                    </template>
-                </td>
+                    </td>
+                </template>
+
             </tr>
         </template>
 
@@ -84,20 +89,20 @@
     import Vue from 'vue';
     import Img from './sub/img.vue';
     export default{
-        name:'list',
-        components:{
-            'td-img':Img
+        name: 'list',
+        components: {
+            'td-img': Img
         },
         props: {
             loading: {
                 //表格的加载状态
-                type:Boolean,
-                default:false
+                type: Boolean,
+                default: false
             },
             responseStatus: {
                 //表格的信息响应状态
-                type:Boolean,
-                default:true
+                type: Boolean,
+                default: true
             },
             colgroup: {
                 //表格的colgroup分布规则
@@ -122,14 +127,14 @@
             },
             theads: {
                 //表格的表头
-                type:Array,
+                type: Array,
                 default(){
                     return []
                 }
             },
             data: {
                 //表格数据
-                type:Array,
+                type: Array,
                 default(){
                     return [];
                 }
@@ -143,31 +148,31 @@
              * @param {number} index 该条数据在数组中的索引
              * @returns {*} 处理后的内容
              */
-            privateFilter(value, filter, index){
+                    privateFilter(value, filter, index){
                 if (typeof Vue.filter(filter) === 'function') {
-                    return Vue.filter(filter)(value,index);
-                }else{
+                    return Vue.filter(filter)(value, index);
+                } else {
                     return value;
                 }
             }
         },
-        computed:{
+        computed: {
             colspan(){
-                return this.operations.length>0 ? this.theads.length+1 : this.theads.length;
+                return this.operations.length > 0 ? this.theads.length + 1 : this.theads.length;
             }
         },
-        methods:{
-            renderByConfigItem(item,key){
-                return typeof this.config[key]==='object' && item[key]!=='' && item[key]!=null;
+        methods: {
+            renderByConfigItem(item, key){
+                return typeof this.config[key] === 'object' && item[key] !== '' && item[key] != null;
             },
-            configItemClassName(item,key){
-                return typeof this.config[key][item[key]]!='undefined' ?  this.config[key][item[key]].className : '';
+            configItemClassName(item, key){
+                return typeof this.config[key][item[key]] != 'undefined' ? this.config[key][item[key]].className : '';
             },
-            configItemContent(item,key){
-                return typeof this.config[key][item[key]]!=='undefined' ? this.config[key][item[key]].text : '';
+            configItemContent(item, key){
+                return typeof this.config[key][item[key]] !== 'undefined' ? this.config[key][item[key]].text : '';
             },
-            renderByFilter(key,filter){
-                return typeof this.config[key]==='undefined' && typeof filter!=='undefined';
+            renderByFilter(key, filter){
+                return typeof this.config[key] === 'undefined' && typeof filter !== 'undefined';
             }
         }
     }
