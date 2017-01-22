@@ -70,7 +70,7 @@
                            :href="operation.link"
                            :target="operation.linkToNew ? '_blank' : ''"
                            :class="operation.className"
-                           @click="operation.action(JSON.parse(JSON.stringify(item)))">
+                           @click="typeof operation.action==='function' ? operation.action(JSON.parse(JSON.stringify(item))) : new Function()">
                             <span v-if="operation.icon!==''" class="glyphicon"
                                   :class="'glyphicon-'+operation.icon"></span>
                             {{operation.text}}
