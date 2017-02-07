@@ -61,23 +61,23 @@
                         {{item[thead.key]}}
                     </template>
                 </td>
-
-                <template v-for="operation in operations">
+                <template v-if="operations.length>0">
                     <td>
-                        <a v-if="(typeof operation.displayFilter==='function' && operation.displayFilter(JSON.parse(JSON.stringify(item)))) || typeof operation.displayFilter==='undefined'"
-                           class="btn btn-xs"
-                           style="margin-right:5px"
-                           :href="operation.link"
-                           :target="operation.linkToNew ? '_blank' : ''"
-                           :class="operation.className"
-                           @click="typeof operation.action==='function' ? operation.action(JSON.parse(JSON.stringify(item))) : new Function()">
+                        <template v-for="operation in operations">
+                            <a v-if="(typeof operation.displayFilter==='function' && operation.displayFilter(JSON.parse(JSON.stringify(item)))) || typeof operation.displayFilter==='undefined'"
+                               class="btn btn-xs"
+                               style="margin-right:5px"
+                               :href="operation.link"
+                               :target="operation.linkToNew ? '_blank' : ''"
+                               :class="operation.className"
+                               @click="typeof operation.action==='function' ? operation.action(JSON.parse(JSON.stringify(item,$event))) : new Function()">
                             <span v-if="operation.icon!==''" class="glyphicon"
                                   :class="'glyphicon-'+operation.icon"></span>
-                            {{operation.text}}
-                        </a>
+                                {{operation.text}}
+                            </a>
+                        </template>
                     </td>
                 </template>
-
             </tr>
         </template>
 

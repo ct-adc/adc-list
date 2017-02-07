@@ -33,7 +33,7 @@ data | 表格数据 | Array | []
 --- | --- | --- | --- | --- | 
 icon | 操作按钮中的图标 | String | 否 | 无
 text | 操作按钮的文字 | String | 是 | 无
-action | 操作按钮的click事件回调 | Function | 否 | 无
+action | 操作按钮的click事件回调,接收的参数为该项的数据、event对象 | Function | 否 | 无
 link | 操作按钮的链接地址 | String | 否 | 无
 linkToNew | 操作按钮的链接地址是否跳转到新页面 | String | 否 | 无
 displayFilter | 操作按钮的显示隐藏规则 | 否 | 无
