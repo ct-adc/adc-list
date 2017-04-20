@@ -23,7 +23,7 @@
         </template>
         <template v-else-if="!responseStatus">
             <tr>
-                <td :colspan="colspan" class="text-center">请求出错!</td>
+                <td :colspan="colspan" class="text-center">{{responseMsg}}</td>
             </tr>
         </template>
         <template v-else>
@@ -103,6 +103,10 @@
                 //表格的信息响应状态
                 type: Boolean,
                 default: true
+            },
+            responseMsg:{
+                type:String,
+                default:'请求出错!'
             },
             colgroup: {
                 //表格的colgroup分布规则

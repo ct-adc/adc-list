@@ -17,6 +17,7 @@ Vue.component(List.name,List);
 --- | --- | --- | --- |
 loading | 加载状态 | Boolean | false
 responseStatus | 响应状态 | Boolean | true
+responseMsg | 响应msg | String | '请求出错!'
 colgroup | 每列的宽度 | Array | []
 operations | 操作列的操作项描述[见下方详细信息] | Array | []
 config | 数据的渲染配置[见下方详细信息] | Object | {}
@@ -36,7 +37,7 @@ text | 操作按钮的文字 | String | 是 | 无
 action | 操作按钮的click事件回调,接收的参数为该项的数据、event对象 | Function | 否 | 无
 link | 操作按钮的链接地址 | String | 否 | 无
 linkToNew | 操作按钮的链接地址是否跳转到新页面 | String | 否 | 无
-displayFilter | 操作按钮的显示隐藏规则 | 否 | 无
+displayFilter | 操作按钮的显示隐藏规则,该函数接收一个参数item(该行的源数据) | Function | 否 | 无
 
 ### config
 

@@ -50,6 +50,7 @@ new Vue({
         ],
         loading: false,
         responseStatus: true,
+        responseMsg:'参数出错!',
         data: [
             {
                 BeginTime: '20160101',
