@@ -42,6 +42,7 @@ msg | 显示信息(status为true时为提示信息(如'请点击搜索按钮'),s
 
 ### table-column配置项
 
+<font size='12px'>
 参数|描述|类型|是否必填|默认值
 --- | --- | --- | --- | --- |
 type | 数据被渲染为什么类型 | String | 非必填 | ''(用对应data中的数据渲染)
@@ -53,6 +54,7 @@ visible | 该列是否可见（为方法时取决于返回值,该方法接收的
 filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function)参数为当前项的值(待考虑) | String,Function | 非必填 | ''(不处理)
 mapper | 映射(将数据通过映射转换为显示内容(比如将数字1显示为'已启用')) | Array | 非必填 | [](不映射)
 ashtml | 是否将内容渲染为html | Boolean | 非必填 | false
+</font>
 
 #### vm
 
