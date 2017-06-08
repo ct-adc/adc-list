@@ -1,25 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>adc</title>
     <link href="http://static.tcy365.com/cdn/bootstrap/3.3.5/css/bootstrap.dz.min.css" rel="stylesheet">
     <link href="http://static.tcy365.com/cdn/bootstrap/3.3.5/css/theme.css" rel="stylesheet">
-  </head>
-  <body>
-
-    <div id="list">
-      <list :data="data" :theads="theads" :loading="loading" :response-status="responseStatus" :response-msg="responseMsg" :config="config" :operations="operations"></list>
+</head>
+<body>
+<div id="app">
+    <div class="mb10">
+        <button type="button" class="btn btn-sm btn-primary" @click="getChecked">
+            获取选中的项
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" @click="change">
+            修改配置
+        </button>
     </div>
 
+    <adc-table :data="tableData" initial-all-checked ref="table">
+        <adc-table-column type="selection" visible>
+            <!--加入type:selection用于方便控制单行数据的该项的显示-->
 
-    <div id="td">
-      <td-img :img-src="imgSrc"></td-img>
-    </div>
+        </adc-table-column>
+        <adc-table-column prop="name"
+                          name="名称"
+                          width="">
+        </adc-table-column>
+        <adc-table-column prop="age"
+                          name="年龄"
+                          width="" :visible="visibleFilter" filter="a">
+        </adc-table-column>
+        <adc-table-column prop="order"
+                          name="排序"
+                          width="180" :vm="vms.order">
+        </adc-table-column>
+        <adc-table-column prop="dep"
+                          name="部门"
+                          width=""
+                          :mapper="deps">
 
-    <script src="http://static.tcy365.com/cdn/jquery/2.1.0/jquery.js"></script>
-    <script src="http://static.tcy365.com/cdn/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="http://static.tcy365.com/cdn/bootstrap-page/1.0.0/page.min.js"></script>
-    <script src="/asset/simple.bundle.js"></script>
-  </body>
+        </adc-table-column>
+        <adc-table-column prop="img"
+                          name="图片"
+                          width=""
+                          :vm="vms.img">
+        </adc-table-column>
+        <adc-table-column prop="html" name="dom" :filter="htmlResolve" as-html>
+
+        </adc-table-column>
+        <adc-table-column name="操作"
+                          width="200"
+                          :vm="vms.operator">
+        </adc-table-column>
+    </adc-table>
+</div>
+
+
+<script src="http://static.tcy365.com/cdn/jquery/2.1.0/jquery.js"></script>
+<script src="http://static.tcy365.com/cdn/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://static.tcy365.com/cdn/bootstrap-page/1.0.0/page.min.js"></script>
+<script src="/asset/simple.bundle.js"></script>
+</body>
 </html>
