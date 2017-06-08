@@ -43,7 +43,7 @@ msg | 显示信息(status为true时为提示信息(如'请点击搜索按钮'),s
 ### table-column配置项
 
 参数|描述|类型|是否必填|默认值
---- | --- | --- | --- |
+--- | --- | --- | --- | --- |
 type | 数据被渲染为什么类型 | String | 非必填 | ''(用对应data中的数据渲染)
 prop | 对应的字段名 | String | 非必填 | ''(不对应data中的任何字段，为抽象字段，如复选框，可以不指定该项)
 name | 表头显示名称 | String | 非必填 | ''(表头标题为字符串'')
@@ -98,12 +98,14 @@ ashtml | 是否将内容渲染为html | Boolean | 非必填 | false
 嵌入到table中的vm具有一致的props, 以便table向其传值, props列表如下:
 
 参数|描述|类型|是否必填|默认值
---- | --- | --- | --- |
-prop | 字段名 | String | 非必填（能对应到自定义vm的td一般都有值） |
-item
-index
-data
-config
+--- | --- | --- | --- | --- |
+prop | 字段名 | String | 非必填 | ''
+item | 改行的数据 | Object | 非必填 | {}
+index | 索引 | Number | 非必填 | -1 (无意义)
+data | 数据 | Array | 非必填 | []
+config | 组件自身的配置 | Object | 非必填 | 不同的组件有不同的默认配置项
+
+
 
 
 
