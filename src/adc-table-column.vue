@@ -18,8 +18,8 @@
                 type: Object,
                 default() {
                     return {
-                        name:'',
-                        config:{}
+                        name: '',
+                        config: {}
                     }
                 }
             },
@@ -44,11 +44,21 @@
             asHtml: { // 将数据渲染为html
                 type: Boolean,
                 default: false
+            },
+            color: {
+                type: Array,
+                default(){
+                    return [];
+                }
+            },
+            className: {
+                type: [String,Function],
+                default: ''
             }
         },
         computed: {
             column(){
-                var column= {
+                return {
                     type: this.type,
                     prop: this.prop,
                     name: this.name,
@@ -57,9 +67,10 @@
                     visible: this.visible,
                     filter: this.filter,
                     mapper: this.mapper,
-                    asHtml: this.asHtml
+                    asHtml: this.asHtml,
+                    color: this.color,
+                    className:this.className
                 };
-                return column;
             }
         },
         render(h){
@@ -71,11 +82,14 @@
         methods: {
             addCol(){
                 this.$parent.addCol(this.column);
+            },
+            updateCol(){
+                this.$parent.updateCol(this.column);
             }
         },
-        watch:{
+        watch: {
             column(){
-                this.addCol();
+                this.updateCol();
             }
         }
     }

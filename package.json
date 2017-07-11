@@ -1,7 +1,7 @@
 {
   "name": "ct-adc-list",
   "description": "a vuejs component render a table",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "author": "ruby",
   "private": false,
   "scripts": {

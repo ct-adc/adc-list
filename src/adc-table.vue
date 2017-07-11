@@ -162,11 +162,11 @@
                             typeof col.visible === 'undefined',
                             typeof col.visible === 'function' && col.visible(item, index, data)
                         ];
-                        if (visible.includes(true)) {
+                        if (visible.indexOf(true) > -1) {
                             if (col.vm.name !== '') {
                                 let vm = h(col.vm.name, {
                                     props: {
-                                        config:col.vm.config,
+                                        config: col.vm.config,
                                         prop: col.prop,
                                         item,
                                         index,
@@ -221,7 +221,23 @@
                                         }
                                     });
                                 } else {
-                                    return <td>{result}</td>;
+                                    let className = '';
+                                    if (col.color.length > 0) {
+                                        let matched = col.color.filter(item=> {
+                                            return item.text === result;
+                                        });
+                                        if (matched.length > 0) {
+                                            className = 'text-' + matched[0].color;
+                                        }
+                                    }
+                                    if (typeof col.className !== 'undefined') {
+                                        if (typeof col.className === 'string') {
+                                            className += ' ' + col.className;
+                                        } else if (typeof col.className === 'function') {
+                                            className += ' ' + col.className(result);
+                                        }
+                                    }
+                                    return <td class={className}>{result}</td>;
                                 }
 
                             }
@@ -235,6 +251,15 @@
             // 供adc-column调用，解析cloumn并设置到this.column
             addCol(col){
                 this.column.push(col);
+            },
+            updateCol(col){
+                this.column = this.column.map(item=> {
+                    if (item.prop === col.prop && item.name === col.name) {
+                        return col;
+                    } else {
+                        return item;
+                    }
+                });
             },
             // 选中/取消选中所有项
             checkAll(e){
@@ -252,7 +277,7 @@
             // 选中/取消选中一项
             checkOne(index){
                 return (e)=> {
-                    if (e.target.checked && !this.checked.includes(index)) {
+                    if (e.target.checked && !this.checked.indexOf(index) > -1) {
                         this.checked.push(index);
                         this.allChecked = this.checked.length === this.data.length;
                     } else {
@@ -284,7 +309,3 @@
         }
     }
 </script>
-
-
-
-

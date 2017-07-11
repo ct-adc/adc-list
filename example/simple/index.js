@@ -35,7 +35,7 @@ var tableData = [
         html:'hello'
     }, {
         name: 'ruby2',
-        age: 15,
+        age: 16,
         dep:1,
         img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
         html:'hello'
@@ -105,6 +105,13 @@ new Vue({
             },
             order:{
                 name:'rt-input'
+            }
+        },
+        className(val){
+            if(val===30){
+                return 'text-danger';
+            }else{
+                return 'text-success';
             }
         }
     },
