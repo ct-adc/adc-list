@@ -96,8 +96,8 @@ new Vue({
             img:{
                 name:'adc-img',
                 config:{
-                    width:80,
-                    height:80
+                    width:180,
+                    height:180
                 }
             },
             operator:{
