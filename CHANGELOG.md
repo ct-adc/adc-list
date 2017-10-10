@@ -4,7 +4,7 @@
 
 *2017-10-10*
 
-- 修复 修改vue和vue-template-compiler的版本
+- 修复 修改vue和vue-template-compiler的版本，vue版本写死win下导致引用该组件的项目编译不通过
 
 ### 2.0.1
 
