@@ -1,4 +1,4 @@
-<script type="es6">
+<script type="text/ecmascript-6">
     import Vue from 'vue';
     function deepClone(vnodes, createElement) {
         function cloneVNode(vnode) {
@@ -210,7 +210,7 @@
                                     if (typeof col.filter === 'string') {
                                         result = Vue.filter(col.filter)(result);
                                     } else {
-                                        result = col.filter(result);
+                                        result = col.filter(result,item);
                                     }
                                 }
 
@@ -306,6 +306,9 @@
                     }
                 }
             }
+        },
+        beforeDestroy(){
+            console.log('beforeDestroy');
         }
     }
 </script>

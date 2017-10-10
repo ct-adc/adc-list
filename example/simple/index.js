@@ -6,6 +6,8 @@ import components from '../../index.js';
 import Img from '../src/adc-img.vue';
 import Buttons from '../src/buttons.vue';
 import RtInput from '../src/rt-input.vue';
+import A from './a.vue';
+import B from './b.vue'
 
 Vue.component('adc-table-operator',Buttons);
 Vue.component('adc-img',Img);
@@ -69,10 +71,13 @@ var tableData = [
 new Vue({
     components: {
         'adc-table-column': components['adc-table-column'],
-        'adc-table': components['adc-table']
+        'adc-table': components['adc-table'],
+        aaa:A,
+        bbb:B
     },
     el: '#app',
     data: {
+        table:'table1',
         tableData: tableData,
         visibleFilter(item, index, data){
             return item.age>13;
@@ -89,8 +94,8 @@ new Vue({
                 val:'移动发行'
             }
         ],
-        htmlResolve(item){
-            return `<b>${item}</b>`
+        htmlResolve(data,item){
+            return `<b>${data}-${item.age}</b>`;
         },
         vms:{
             img:{
@@ -124,6 +129,9 @@ new Vue({
                 width:100,
                 height:100
             }
+        },
+        changeTable(){
+            this.table='table2';
         }
     }
 });

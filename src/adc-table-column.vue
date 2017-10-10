@@ -1,4 +1,4 @@
-<script type="es6">
+<script type="text/ecmascript-6">
     export default{
         name: 'adc-table-column',
         props: {

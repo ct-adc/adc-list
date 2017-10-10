@@ -50,7 +50,7 @@ name | 表头显示名称 | String | 非必填 | ''(表头标题为字符串'')
 width | 列宽 | String(Number) | 非必填 | ''(0)
 vm | 自定义组件的配置(详细见下方) | Object | 非必填 | {name:'',config:{}}
 visible | 该列是否可见（为方法时取决于返回值,该方法接收的参数item-当前行数据,index-当前行索引,data-整个数据数组） | Boolean,Function | 非必填 | true
-filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function)参数为当前项的值 | String,Function | 非必填 | ''(不处理)
+filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function)参数为当前项的值和整行的数据对象 | String,Function | 非必填 | ''(不处理)
 mapper | 映射(将数据通过映射转换为显示内容(比如将数字1显示为'已启用')) | Array | 非必填 | []  (不映射)
 ashtml | 是否将内容渲染为html | Boolean | 非必填 | false
 

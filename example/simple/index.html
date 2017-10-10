@@ -15,9 +15,14 @@
         <button type="button" class="btn btn-sm btn-primary" @click="change">
             修改配置
         </button>
+        <button type="button" class="btn btn-sm btn-primary" @click="changeTable">
+            修改表格
+        </button>
     </div>
-
-    <adc-table :data="tableData" initial-all-checked ref="table">
+    <template v-if="table==='table1'">table1</template>
+    <template v-else>table2</template>
+    <div v-show="table==='table1'">
+        <adc-table :data="tableData" initial-all-checked ref="table">
         <adc-table-column type="selection" visible>
             <!--加入type:selection用于方便控制单行数据的该项的显示-->
 
@@ -53,6 +58,30 @@
                           :vm="vms.operator">
         </adc-table-column>
     </adc-table>
+    </div>
+    <div v-show="table!=='table1'">
+        table2
+    <adc-table :data="tableData" initial-all-checked ref="table">
+        <adc-table-column prop="dep"
+                          name="部门"
+                          width=""
+                          :mapper="deps">
+
+        </adc-table-column>
+        <adc-table-column prop="img"
+                          name="图片"
+                          width=""
+                          :vm="vms.img">
+        </adc-table-column>
+        <adc-table-column prop="html" name="dom" :filter="htmlResolve" as-html>
+
+        </adc-table-column>
+        <adc-table-column name="操作"
+                          width="200"
+                          :vm="vms.operator">
+        </adc-table-column>
+    </adc-table>
+    </div>
 </div>
 
 
