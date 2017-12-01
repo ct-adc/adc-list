@@ -42,8 +42,8 @@
         <adc-table-column prop="dep"
                           name="部门"
                           width=""
+                          :class-name="[{text: '系统研发', className: 'text-danger'},{text: '移动平台', className: 'text-success'}]"
                           :mapper="deps">
-
         </adc-table-column>
         <adc-table-column prop="img"
                           name="图片"

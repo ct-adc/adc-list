@@ -49,10 +49,33 @@ prop | 对应的字段名 | String | 非必填 | ''(不对应data中的任何字
 name | 表头显示名称 | String | 非必填 | ''(表头标题为字符串'')
 width | 列宽 | String(Number) | 非必填 | ''(0)
 vm | 自定义组件的配置(详细见下方) | Object | 非必填 | {name:'',config:{}}
-visible | 该列是否可见（为方法时取决于返回值,该方法接收的参数item-当前行数据,index-当前行索引,data-整个数据数组） | Boolean,Function | 非必填 | true
-filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function)参数为当前项的值和整行的数据对象 | String,Function | 非必填 | ''(不处理)
+visible | 该列是否可见（为方法时取决于返回值,当为function时详见下方说明） | Boolean,Function | 非必填 | true
+filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function时详见下方说明 | String,Function | 非必填 | ''(不处理)
+className | 设置单元格td的class(当为function时详见下方说明) | String,Function,Array | 非必填 | ''(不添加类)
 mapper | 映射(将数据通过映射转换为显示内容(比如将数字1显示为'已启用')) | Array | 非必填 | []  (不映射)
 ashtml | 是否将内容渲染为html | Boolean | 非必填 | false
+
+className为Array时格式如下：
+```
+[
+    {
+        text: '系统研发',
+        className: 'text-danger'
+    },
+    {
+        text: '移动平台',
+        className: 'text-success'
+    }
+]
+```
+
+### 方法属性的说明
+
+可为方法的属性有: visible, filter, className;
+
+方法的this指向外层组件，及table组件的父组件，也是开发者项目中使用了table的组件。
+
+方法的参数统一为 data, item, index, key，分别为当前项的值、当前行的值、当前项的索引、当前项的key。
 
 
 #### vm

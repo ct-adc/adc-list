@@ -86,7 +86,11 @@
                     tip;
 
             colgroups = this.column.map(col=> {
-                return <col width={col.width}/>;
+                if(col.width !== ''){
+                    return <col width={col.width}/>;
+                }else{
+                    return <col/>;
+                }
             });
             ths = this.column.map(col=> {
                 if (col.name !== '') {
@@ -160,7 +164,7 @@
                         let visible = [
                             typeof col.visible === 'boolean' && col.visible,
                             typeof col.visible === 'undefined',
-                            typeof col.visible === 'function' && col.visible(item, index, data)
+                            typeof col.visible === 'function' && col.visible.apply(this.$parent, [item[col.prop], item, index, col.prop])
                         ];
                         if (visible.indexOf(true) > -1) {
                             if (col.vm.name !== '') {
@@ -210,10 +214,9 @@
                                     if (typeof col.filter === 'string') {
                                         result = Vue.filter(col.filter)(result);
                                     } else {
-                                        result = col.filter(result,item);
+                                        result = col.filter.apply(this.$parent, [result,item,index,col.prop]);
                                     }
                                 }
-
                                 if (col.asHtml) {
                                     return h('td', {
                                         domProps: {
@@ -222,19 +225,19 @@
                                     });
                                 } else {
                                     let className = '';
-                                    if (col.color.length > 0) {
-                                        let matched = col.color.filter(item=> {
-                                            return item.text === result;
-                                        });
-                                        if (matched.length > 0) {
-                                            className = 'text-' + matched[0].color;
-                                        }
-                                    }
+
                                     if (typeof col.className !== 'undefined') {
                                         if (typeof col.className === 'string') {
                                             className += ' ' + col.className;
                                         } else if (typeof col.className === 'function') {
-                                            className += ' ' + col.className(result);
+                                            className += ' ' + col.className.apply(this.$parent, [result,item,index,col.prop]);
+                                        } else if (Array.isArray(col.className)){
+                                            let matched = col.className.filter(item=> {
+                                                return item.text === result;
+                                            });
+                                            if (matched.length > 0) {
+                                                className += ' ' + matched[0].className;
+                                            }
                                         }
                                     }
                                     return <td class={className}>{result}</td>;
@@ -306,9 +309,6 @@
                     }
                 }
             }
-        },
-        beforeDestroy(){
-            console.log('beforeDestroy');
         }
     }
 </script>

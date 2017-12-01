@@ -12,7 +12,7 @@
             },
             width: { // 列宽
                 type: [Number, String],
-                default: 0
+                default: ''
             },
             vm: { // 插入的自定义组件名称
                 type: Object,
@@ -52,7 +52,7 @@
                 }
             },
             className: {
-                type: [String,Function],
+                type: [String,Function,Array],
                 default: ''
             }
         },
@@ -62,7 +62,7 @@
                     type: this.type,
                     prop: this.prop,
                     name: this.name,
-                    width: this.width * 1,
+                    width: this.width,
                     vm: this.vm,
                     visible: this.visible,
                     filter: this.filter,

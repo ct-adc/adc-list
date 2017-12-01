@@ -79,8 +79,8 @@ new Vue({
     data: {
         table:'table1',
         tableData: tableData,
-        visibleFilter(item, index, data){
-            return item.age>13;
+        visibleFilter(data, item, index, key){
+            return data>13;
         },
         deps:[
             {
@@ -94,8 +94,8 @@ new Vue({
                 val:'移动发行'
             }
         ],
-        htmlResolve(data,item){
-            return `<b>${data}-${item.age}</b>`;
+        htmlResolve(data,item,index,key){
+            return `${this.table}<b>${data}-${item.age}-${key}</b>`;
         },
         vms:{
             img:{
@@ -112,7 +112,7 @@ new Vue({
                 name:'rt-input'
             }
         },
-        className(val){
+        className(val,item,index,prop){
             if(val===30){
                 return 'text-danger';
             }else{
