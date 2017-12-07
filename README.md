@@ -1,168 +1,127 @@
-# 表格渲染组件
+## 介绍
+
+本组件用于渲染一个table，支持自定义单元格显示，如将一个单元格中的内容渲染为一个外部的组件。
 
 ## 使用
 
-从npm安装`ct-adc-list`
+### 安装
 ```
-npm install ct-adc-list
+npm install 'ct-adc-list';
 ```
-在代码中引用
+
+### 使用
+
+Vue.component('adc-table',table['adc-table']);
+Vue.component('adc-table-column',table['adc-table-column']);
+
+或
+
+new Vue({
+    component:{
+        'adc-table-column': table['adc-table-column'],
+        'adc-table': table['adc-table']
+    }
+})
 ```
-import List from 'ct-adc-list';
-Vue.component(List.name,List);
-```
+
 ## 参数说明
 
-参数|描述|类型|默认值
---- | --- | --- | --- |
-loading | 加载状态 | Boolean | false
-responseStatus | 响应状态 | Boolean | true
-responseMsg | 响应msg | String | '请求出错!'
-colgroup | 每列的宽度 | Array | []
-operations | 操作列的操作项描述[见下方详细信息] | Array | []
-config | 数据的渲染配置[见下方详细信息] | Object | {}
-theads | 表格的表头标题[见下方详细信息] | Array | []
-data | 表格数据 | Array | []
+### table配置项
 
-### operations 
+参数|描述|类型|是否必填|默认值
+--- | --- | --- | --- |  --- |
+data | 用来渲染表格的数据 | Array | 非必填 | []
+initialAllChecked | 是否要全选数据 (当含有type为selection的列时可用) | Boolean | 非必填 | false
+initialChecked | 要选中的数据的索引集合 (当含有type为selection的列时可用) | Array | 非必填 | []
+loading | 加载状态 | Boolean | 非必填 | false
+status | 表格数据响应状态(成功/失败) | Boolean | 非必填 | true
+msg | 显示信息(status为true时为提示信息(如'请点击搜索按钮'),status为false时为出错信息(如'请求失败')) | String | 非必填 | ''
 
-表格中的操作列的说明，该数组的每项代表一个操作按钮，具体配置为一个对象;
+### table-column配置项
 
-#### 配置项
+参数|描述|类型|是否必填|默认值
+--- | --- | --- | --- | --- |
+type | 数据被渲染为什么类型 | String | 非必填 | ''(用对应data中的数据渲染)
+prop | 对应的字段名 | String | 非必填 | ''(不对应data中的任何字段，为抽象字段，如复选框，可以不指定该项)
+name | 表头显示名称 | String | 非必填 | ''(表头标题为字符串'')
+width | 列宽 | String(Number) | 非必填 | ''(0)
+vm | 自定义组件的配置(详细见下方) | Object | 非必填 | {name:'',config:{}}
+visible | 该列是否可见（为方法时取决于返回值,当为function时详见下方说明） | Boolean,Function | 非必填 | true
+filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function时详见下方说明 | String,Function | 非必填 | ''(不处理)
+className | 设置单元格td的class(当为function时详见下方说明) | String,Function,Array | 非必填 | ''(不添加类)
+mapper | 映射(将数据通过映射转换为显示内容(比如将数字1显示为'已启用')) | Array | 非必填 | []  (不映射)
+ashtml | 是否将内容渲染为html | Boolean | 非必填 | false
 
-参数 | 描述 | 类型 | 必填 | 默认
---- | --- | --- | --- | --- | 
-icon | 操作按钮中的图标 | String | 否 | 无
-text | 操作按钮的文字 | String | 是 | 无
-className | 操作按钮的样式(如'btn-primary') | String | 否(不填时不会显示为按钮) | 无
-action | 操作按钮的click事件回调,接收的参数为该项的数据、event对象 | Function | 否 | 无
-link | 操作按钮的链接地址 | String | 否 | 无
-linkToNew | 操作按钮的链接地址是否跳转到新页面 | String | 否 | 无
-displayFilter | 操作按钮的显示隐藏规则,该函数接收一个参数item(该行的源数据) | Function | 否 | 无
-
-### config
-
-config用于数据到显示内容的转换。该对象的每项代表一个数据转换规则，该项的key以具体的字段名命名；
-
-该项可以配置为一个对象或一个方法;
-
-#### 对象
-
-如:
+className为Array时格式如下：
 ```
-SignInConfigType:{
-    1:{
-      className: '',
-      text: '签到'
+[
+    {
+        text: '系统研发',
+        className: 'text-danger'
     },
-    2:{
-      className:'',
-      text:'抽奖奖励'
-    },
-    3: {
-      className:'',
-      text:'分享奖励'
+    {
+        text: '移动平台',
+        className: 'text-success'
     }
-}
+]
 ```
-其中每一项为对应的属性值，即当属性为该属性值时显示其中text标注的内容；
 
-##### 配置项
+### 方法属性的说明
 
-参数 | 描述 | 类型 | 必填 | 默认
---- | --- | --- | --- | --- | 
-className | 数据渲染时要添加的类名，比如把内容显示为红色 | String | 否 | 无
-text | 显示内容 | String | 否 | 无
+可为方法的属性有: visible, filter, className;
 
-#### 方法
+方法的this指向外层组件，及table组件的父组件，也是开发者项目中使用了table的组件。
 
-如:
-```
-Url: function (value,item,index) {
-    return '<img width="100" height="100" src="' + value + '"/>';
-}
-```
-定义了该字段在渲染时进行的处理，该函数返回一个字符串，该字符串以html的形式被显示到实际页面上；
-config默认有三个参数，分别是value/item/index，分别表示该项数据该字段的值、该项数据的完整对象和该项数据在列表中的索引；
+方法的参数统一为 data, item, index, key，分别为当前项的值、当前行的值、当前项的索引、当前项的key。
 
-### theads
 
-该数组中的每一项代表一列数据的表头;
+#### vm
 
-如
-```
-{
-    key: 'BeginTime',
-    name: '开始时间',
-    filter: 'dateTimeBToF'
-}
-```
-#### 配置项
+#### vm.name
 
-参数 | 描述 | 类型 | 必填 | 默认
---- | --- | --- | --- | --- | 
-key | 对应的字段名 | String | 是 | 无
-name | 表头名称 | String | 是 | 无
-filter | 全局过滤器名称 | String | 否 | 无
-component | 该列数据用到的组件名称[见下方详细信息] | Object | 否 | 无
+自定义组件的名称
 
-### theads[i].component
+#### vm.config
 
-此项用于配置表格中的组件级渲染,对应thead的component配置项；
+自定义组件的配置项
 
-#### 配置项
-参数 | 描述 | 类型 | 必填 | 默认
---- | --- | --- | --- | --- | 
-name | 指定组件的名称[参见内置组件列表] | String | 是 | 无
-props | 指定传入组件的props | Object | 否 | 无
+## 方法说明
 
-### 其他说明 
+### getChecked
 
-#### 内置组件列表
+**参数:** 无参数
 
-组件名称 | 组件说明
---- | --- |
-img | 用于图片项的渲染，该组件会将图片渲染为一张可自定义尺寸的图片，图片的hover用于展示图片的原图
+**描述:** 获取选中项
+
+**返回值** {}
+
+{}.allChecked 是否全选
+
+{}.checked 一个数组；为选中项的索引集合
 
 
 ## Q & A
 
-1.字段的原始内容要经过处理才能显示出来，该怎么配置？
+### 某些情况下需要整列不显示，怎么处理？
 
-- 对于公用的数据处理，如果在全局有相应的vue过滤器，使用theads中的filter指定过滤器；
+在html片段中去掉对应的adc-table-column
 
-- 如果是针对本次渲染的特殊处理，如图片地址需要显示成图片，通过将config中的配置项设置为转换函数来处理；
+### 数据的处理可以通过mapper和filter，两者都可以干扰到数据的最终结果，内部规则是怎样的?
 
-- 如果是一一对应的列表，如状态字段，属性值为1，要显示为"正常",则通过将config中的配置项设置为转换对象来配置内容转换规则；
+先使用mapper映射，再使用filter处理
 
+### 自定义的vm怎么传入props？
 
-2.如果操作列中有的按钮需要根据情况设置为不显示，该怎么配置？
+自定义的vm中的props通过table-column配置项vm.config进行传入.外部的修改可以引发table的重新渲染
 
-通过operations中的对应操作的displayFilter字段进行配置。
+### 自定义vm的开发
 
-该过滤器是一个函数，接收该条数据的内容作为参数；如：
-```
-function(item){
-    return item.Status===1;
-}
-```
-那么只有该条数据的Status字段为1时才会显示相应的操作按钮；
+嵌入到table中的vm具有一致的props, 以便table向其传值, props列表如下:
 
-3.theads中的项是否需要和数据中的key一一对应？
-
-不需要。
-举例说明：如果数据中有BeginTime和EndTime两个字段，但是实际渲染时，想显示一列"起始时间"。
-那么，可以在theads中配置一列:
-```
-{
-    key:'ShowTime',
-    name:'显示时间'
-}
-```
-并在config中设置该列实际的内容：
-```
-ShowTime:function(value,item,index){
-    return item.BeginTime+'-'+item.EndTime;
-}
-```
-那么实际渲染时，list组件会显示一列"起始时间"，内容为BeginTime-EndTime。
+参数|描述|类型|是否必填|默认值
+--- | --- | --- | --- | --- |
+prop | 字段名 | String | 非必填 | ''
+item | 改行的数据 | Object | 非必填 | {}
+index | 索引 | Number | 非必填 | -1 (无意义)
+data | 数据 | Array | 非必填 | []
+config | 组件自身的配置 | Object | 非必填 | 不同的组件有不同的默认配置项

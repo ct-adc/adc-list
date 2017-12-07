@@ -2,115 +2,136 @@
  * @author rubyisapm
  */
 import Vue from 'vue';
-import List from '../../index.js';
-Vue.component(List.name,List);
-Vue.filter('dateTimeBToF', function (value) {
-    return '时间'+value;
+import components from '../../index.js';
+import Img from '../src/adc-img.vue';
+import Buttons from '../src/buttons.vue';
+import RtInput from '../src/rt-input.vue';
+import A from './a.vue';
+import B from './b.vue'
+
+Vue.component('adc-table-operator',Buttons);
+Vue.component('adc-img',Img);
+Vue.component('rt-input',RtInput);
+
+Vue.filter('a',function(v){
+    return v*2;
 });
+var tableData = [
+    {
+        name: 'ruby',
+        age: 12,
+        dep:1,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby2',
+        age: 15,
+        dep:1,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby',
+        age: 12,
+        dep:1,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby2',
+        age: 16,
+        dep:1,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby',
+        dep:3,
+        age: 12,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby2',
+        age: 15,
+        dep:1,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby',
+        age: 12,
+        dep:2,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }, {
+        name: 'ruby2',
+        age: 15,
+        dep:3,
+        img:'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+        html:'hello'
+    }
+];
+
 new Vue({
-    el: '#list',
+    components: {
+        'adc-table-column': components['adc-table-column'],
+        'adc-table': components['adc-table'],
+        aaa:A,
+        bbb:B
+    },
+    el: '#app',
     data: {
-        theads: [
+        table:'table1',
+        tableData: tableData,
+        visibleFilter(data, item, index, key){
+            return data>13;
+        },
+        deps:[
             {
-                key: 'BeginTime',
-                name: '开始时间',
-                filter: 'dateTimeBToF'
-            },
-            {
-                key: 'EndTime',
-                name: '结束时间',
-                filter: 'dateTimeBToF'
-            },
-            {
-                key:'ShowTime',
-                name:'显示时间'
-            },
-            {
-                key:'ImgUrl',
-                name:'图片地址',
-                component:{
-                    name:'img',
-                    props:{
-                        width:120
-                    }
-                }
-            },
-            {
-                key: 'H5Url',
-                name: '跳转链接'
-            },
-            {
-                key: 'Url',
-                name: '文件地址'
-            },
-            {
-                key:'Status',
-                name:'状态'
+                key:1,
+                val:'系统研发'
+            },{
+                key:2,
+                val:'移动平台'
+            },{
+                key:3,
+                val:'移动发行'
             }
         ],
-        loading: false,
-        responseStatus: true,
-        responseMsg:'参数出错!',
-        data: [
-            {
-                BeginTime: '20160101',
-                EndTime: '20160103',
-                H5Url: 'http://www.baidu.com',
-                Url: 'http://www.baidu.com',
-                ImgUrl: 'http://photocdn.sohu.com/20170113/Img478630902.jpg',
-                Status:1
-            },
-            {
-                BeginTime: '20160102',
-                EndTime: '20160103',
-                H5Url: 'http://www.baidu.com',
-                Url: 'http://www.baidu.com',
-                ImgUrl: 'http://photocdn.sohu.com/20170113/Img478630902.jpg',
-                Status:2
-            }
-        ],
-        config: {
-            Url: function (value,item,index) {
-                return '<img width="100" height="100" src="' + value + '"/><img ref="'+index+'dd'+'" width="100" height="100" style="display:none" src="' + value + '"/>';
-            },
-            ShowTime:function(value,item,index){
-                return item.BeginTime+'-'+item.EndTime;
-            },
-            Status:{
-                1:{
-                    className:'text-success',
-                    text:'正常'
-                },
-                2:{
-                    className:'text-danger',
-                    text:'停用'
+        htmlResolve(data,item,index,key){
+            return `${this.table}<b>${data}-${item.age}-${key}</b>`;
+        },
+        vms:{
+            img:{
+                name:'adc-img',
+                config:{
+                    width:180,
+                    height:180
                 }
+            },
+            operator:{
+                name:'adc-table-operator'
+            },
+            order:{
+                name:'rt-input'
             }
         },
-        operations: [
-            {
-                icon: 'edit',
-                text: '查看',
-                className:'btn-success',
-                action: function (item) {
-                    alert('查看操作，我接到的数据'+JSON.stringify(item));
-                }
-            },
-            {
-                icon: 'edit',
-                text: '链接',
-                className:'btn-info',
-                link:'http://www.baidu.com'
-            },
-            {
-                icon: 'edit',
-                text: '只有状态为启用时我才显示',
-                className:'btn-info',
-                link:'http://www.baidu.com',
-                displayFilter:function(item){
-                    return item.Status===1;
-                }
+        className(val,item,index,prop){
+            if(val===30){
+                return 'text-danger';
+            }else{
+                return 'text-success';
             }
-        ]
+        }
+    },
+    methods:{
+        getChecked(){
+            console.log(this.$refs.table.getChecked())
+        },
+        change(){
+            this.vms.img.config={
+                width:100,
+                height:100
+            }
+        },
+        changeTable(){
+            this.table='table2';
+        }
     }
 });
