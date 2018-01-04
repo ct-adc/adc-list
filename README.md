@@ -11,6 +11,7 @@ npm install 'ct-adc-list';
 
 ### 使用
 
+```
 Vue.component('adc-table',table['adc-table']);
 Vue.component('adc-table-column',table['adc-table-column']);
 
