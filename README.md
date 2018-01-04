@@ -125,3 +125,8 @@ item | 改行的数据 | Object | 非必填 | {}
 index | 索引 | Number | 非必填 | -1 (无意义)
 data | 数据 | Array | 非必填 | []
 config | 组件自身的配置 | Object | 非必填 | 不同的组件有不同的默认配置项
+
+
+### 注意事项
+
+1. 给data赋值时，需要保证status为true，才能正确显示数据，否则整个table会被认为处于'错误'的状态。
