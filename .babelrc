@@ -1,7 +1,10 @@
 {
   "presets": [
-    ["es2015", { "modules": false }],
+    ["latest", {
+      "es2015": { "modules": false }
+    }],
+    "stage-2"
   ],
-  "plugins": ["transform-runtime","transform-vue-jsx"],
+  "plugins": ["transform-runtime", "transform-vue-jsx"],
   "comments": false
 }
