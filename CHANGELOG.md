@@ -1,5 +1,13 @@
 ## 更新日志
 
+### 4.0.0
+
+*2018-03-28*
+
+- 新增 增加className属性，用于对table的class属性进行配置
+
+- 删除 删除loading属性，即组件本身不做loading逻辑，使用者需使用ct-adc-loading进行loading控制
+
 ### 3.0.0
 
 *2017-11-30*
