@@ -11,6 +11,7 @@ import B from './component/b.vue';
 import utility from 'ct-utility';
 import loading from 'ct-adc-loading';
 
+
 Vue.component('adc-table-operator', Buttons);
 Vue.component('adc-img', Img);
 Vue.component('rt-input', RtInput);
@@ -18,6 +19,10 @@ Vue.use(loading);
 Vue.filter('a', function(v) {
     return v * 2;
 });
+Vue.filter('dateTimeFormat', function(v){
+    return utility.dateFilter(v, 'yyyy-MM-dd HH:mm:ss');
+});
+
 const tableData = [
     {
         name: 'ruby',
