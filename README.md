@@ -12,15 +12,17 @@ npm install 'ct-adc-list';
 ### 使用
 
 ```
-Vue.component('adc-table',table['adc-table']);
-Vue.component('adc-table-column',table['adc-table-column']);
+import {table, column} from 'ct-adc-list';
+
+Vue.component('adc-table', table);
+Vue.component('adc-column', column);
 
 或
 
 new Vue({
     component:{
-        'adc-table-column': table['adc-table-column'],
-        'adc-table': table['adc-table']
+        'adc-table': table,
+        'adc-column': column
     }
 })
 ```
