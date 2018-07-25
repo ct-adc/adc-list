@@ -3,6 +3,10 @@
 
     export default {
         name: 'adc-table',
+        model: {
+            prop: 'selection',
+            event: 'change'
+        },
         props: {
             data: {
                 type: Array,
@@ -10,14 +14,13 @@
                     return [];
                 }
             },
-            initialAllChecked: {
-                type: Boolean,
-                default: false
-            },
-            initialChecked: {
-                type: Array, // 选中的行的索引,从0开始
-                default() {
-                    return [];
+            selection: {
+                type: Object,
+                default(){
+                    return {
+                        checkAll: false,
+                        checked: []
+                    }
                 }
             },
             status: {
@@ -48,17 +51,7 @@
             }
         },
         created() {
-            this.allChecked = this.initialAllChecked;
-            if (this.allChecked) {
-                const checked = [];
-
-                for (let i = 0; i < this.data.length; i++) {
-                    checked.push(i);
-                }
-                this.checked = checked;
-            } else {
-                this.checked = this.initialChecked;
-            }
+            this.initChecked();
         },
         render(h) {
             let rows,
@@ -132,6 +125,19 @@
             );
         },
         methods: {
+            initChecked(){
+                this.allChecked = this.selection.checkAll;
+                if (this.allChecked) {
+                    const checked = [];
+
+                    for (let i = 0; i < this.data.length; i++) {
+                        checked.push(i);
+                    }
+                    this.checked = checked;
+                } else {
+                    this.checked = this.selection.checked;
+                }
+            },
             colIsVisible(col, item, index){
                 const visible = [
                     typeof col.visible === 'boolean' && col.visible,
@@ -261,6 +267,17 @@
                 } else {
                     this.checked = [];
                 }
+                this.$emit('check-all', this.allChecked);
+                if (this.allChecked){
+                    this.$emit('change', {
+                        checkAll: this.allChecked
+                    });
+                } else {
+                    this.$emit('change', {
+                        checkAll: this.allChecked,
+                        checked: this.checked
+                    });
+                }
             },
             // 选中/取消选中一项
             checkOne(index) {
@@ -274,6 +291,11 @@
                         });
                         this.allChecked = false;
                     }
+                    this.$emit('check', this.getChecked());
+                    this.$emit('change', {
+                        checkAll: this.allChecked,
+                        checked: this.checked
+                    });
                 };
             },
             getChecked() {
@@ -292,6 +314,14 @@
                     allChecked: false,
                     checked: this.checked
                 };
+            }
+        },
+        watch: {
+            'selection.checkAll'(){
+                this.initChecked();
+            },
+            'selection.checked'(){
+                this.initChecked();
             }
         }
     };

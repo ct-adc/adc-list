@@ -103,6 +103,10 @@ new Vue({
         table: 'table1',
         tableData: tableData,
         loading: true,
+        selection: {
+            checkAll: false,
+            checked: [1, 2]
+        },
         visibleFilter(data) {
             return data > 13;
         },
@@ -166,6 +170,21 @@ new Vue({
         },
         changeTable() {
             this.table = 'table2';
+        },
+        checkAll(checkAll){
+            console.log(checkAll);
+        },
+        checkOne(checked){
+            console.log(checked);
+        },
+        changeSelection(){
+            this.selection = {
+                checkAll: false,
+                checked: []
+                // checkAll: false,
+                // checked: [0, 1]
+            };
+            // this.selection.checked = [0, 1];
         }
     }
 });

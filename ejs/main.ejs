@@ -24,11 +24,21 @@
     <button type="button" class="btn btn-sm btn-primary" @click="changeTable">
       修改表格
     </button>
+    <button type="button" class="btn btn-sm btn-primary" @click="changeSelection">
+      修改选中项
+    </button>
   </div>
   <template v-if="table==='table1'">table1</template>
   <template v-else>table2</template>
   <div v-show="table==='table1'">
-    <adc-table :data="tableData" initial-all-checked ref="table" v-loading="loading" class-name="table-bordered table-striped">
+    <adc-table :data="tableData" 
+      initial-all-checked 
+      ref="table" 
+      v-loading="loading" 
+      class-name="table-bordered table-striped" 
+      v-model="selection"
+      @check-all="checkAll" 
+      @check="checkOne">
       <adc-table-column type="selection" visible>
         <!--加入type:selection用于方便控制单行数据的该项的显示-->
 
@@ -65,7 +75,7 @@
       </adc-table-column>
     </adc-table>
   </div>
-  <div v-show="table!=='table1'">
+  <!-- <div v-show="table!=='table1'">
     table2
     <adc-table :data="tableData" initial-all-checked ref="table">
       <adc-table-column prop="dep"
@@ -93,7 +103,7 @@
                         :vm="vms.operator">
       </adc-table-column>
     </adc-table>
-  </div>
+  </div> -->
 </div>
 <script src="//static.tcy365.com/cdn/jquery/2.1.0/jquery.js"></script>
 <script src="//static.tcy365.com/cdn/bootstrap/3.3.7/custom/1.0.4/js/bootstrap.min.js"></script>
