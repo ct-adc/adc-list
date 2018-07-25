@@ -291,7 +291,7 @@
                         });
                         this.allChecked = false;
                     }
-                    this.$emit('check', this.getChecked());
+                    this.$emit('check', {index: index, checked: e.target.checked});
                     this.$emit('change', {
                         checkAll: this.allChecked,
                         checked: this.checked
