@@ -2,9 +2,17 @@
 
 ### 4.1.0
 
-*todo*
+*2018-07-26* todo
+
+- 删除 删除initialAllChecked / initialChecked属性
+
+- 添加 添加checked属性
 
 - 优化 针对复选框使用selection双向绑定
+
+- 优化 添加check和check-all事件
+
+- 修改 在getChecked中返回值由{allChecked: Boolean, checked: Array}改为{checkAll: Boolean, checked: Array}
 
 ### 4.0.1
 

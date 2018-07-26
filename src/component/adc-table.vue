@@ -302,16 +302,16 @@
                 /**
                  * 获取选中的项
                  * @return {Object}
-                 * @return {Boolean} {}.allChecked 是否选中了所有
+                 * @return {Boolean} {}.checkAll 是否选中了所有
                  * @return {Array} {}.checked 选中项的索引(从0开始)
                  */
                 if (this.allChecked) {
                     return {
-                        allChecked: true
+                        checkAll: true
                     };
                 }
                 return {
-                    allChecked: false,
+                    checkAll: false,
                     checked: this.checked
                 };
             }

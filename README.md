@@ -34,8 +34,7 @@ new Vue({
 参数|描述|类型|是否必填|默认值
 --- | --- | --- | --- |  --- |
 data | 用来渲染表格的数据 | Array | 非必填 | []
-initialAllChecked | 是否要全选数据 (当含有type为selection的列时可用) | Boolean | 非必填 | false
-initialChecked | 要选中的数据的索引集合 (当含有type为selection的列时可用) | Array | 非必填 | []
+checked | 选中状态 | Object | 否 | {checkAll: false, checked: []}
 loading | 加载状态 | Boolean | 非必填 | false
 status | 表格数据响应状态(成功/失败) | Boolean | 非必填 | true
 msg | 显示信息(status为true时为提示信息(如'请点击搜索按钮'),status为false时为出错信息(如'请求失败')) | String | 非必填 | ''
@@ -98,10 +97,18 @@ className为Array时格式如下：
 
 **返回值** {}
 
-{}.allChecked 是否全选
+{}.checkAll 是否全选
 
 {}.checked 一个数组；为选中项的索引集合
 
+## 事件说明
+
+### check-all
+
+事件名称 | 说明 | 回调参数 | 描述
+--- | --- | --- | --- 
+check-all | 全选被选中/取消选中 | 是否被全选: Boolean | 全选被选中/取消选中触发的事件
+check | 单项选中/取消选中 | {index: Number, checked: Boolean} | 单项选中/取消选中触发的事件
 
 ## Q & A
 
