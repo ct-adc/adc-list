@@ -47,7 +47,6 @@ type | 数据被渲染为什么类型 | String | 非必填 | ''(用对应data中
 prop | 对应的字段名 | String | 非必填 | ''(不对应data中的任何字段，为抽象字段，如复选框，可以不指定该项)
 name | 表头显示名称 | String | 非必填 | ''(表头标题为字符串'')
 width | 列宽 | String(Number) | 非必填 | ''(0)
-vm | 自定义组件的配置(详细见下方) | Object | 非必填 | {name:'',config:{}}
 visible | 该列是否可见（为方法时取决于返回值,当为function时详见下方说明） | Boolean,Function | 非必填 | true
 filter | 过滤器(为字符串时会到Vue的公用filters中获取方法,当为function时详见下方说明 | String,Function | 非必填 | ''(不处理)
 className | 设置单元格td的class(当为function时详见下方说明) | String,Function,Array | 非必填 | ''(不添加类)
@@ -67,6 +66,21 @@ className为Array时格式如下：
     }
 ]
 ```
+
+### selection列的model
+
+双向绑定属性: selection
+
+默认值: 
+
+```
+{
+    checkAll: false,
+    checked: []
+}
+```
+
+当指定了selection列且按以上形式双向绑定后，则当selection中的选中项发生变化时，则可同步到父组件。
 
 ### table-column插槽
 
@@ -121,23 +135,6 @@ check | 单项选中/取消选中 | {index: Number, checked: Boolean} | 单项�
 ### 数据的处理可以通过mapper和filter，两者都可以干扰到数据的最终结果，内部规则是怎样的?
 
 先使用mapper映射，再使用filter处理
-
-### 自定义的vm怎么传入props？
-
-自定义的vm中的props通过table-column配置项vm.config进行传入.外部的修改可以引发table的重新渲染
-
-### 自定义vm的开发
-
-嵌入到table中的vm具有一致的props, 以便table向其传值, props列表如下:
-
-参数|描述|类型|是否必填|默认值
---- | --- | --- | --- | --- |
-prop | 字段名 | String | 非必填 | ''
-item | 改行的数据 | Object | 非必填 | {}
-index | 索引 | Number | 非必填 | -1 (无意义)
-data | 数据 | Array | 非必填 | []
-config | 组件自身的配置 | Object | 非必填 | 不同的组件有不同的默认配置项
-
 
 ### 注意事项
 
