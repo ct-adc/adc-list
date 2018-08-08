@@ -56,6 +56,12 @@
                 default: ''
             }
         },
+        data(){
+            return {
+                slots: this.$slots,
+                scopedSlots: this.$scopedSlots
+            };
+        },
         computed: {
             column() {
                 return {
@@ -74,6 +80,8 @@
             }
         },
         render(h) {
+            this.scopedSlots = this.$scopedSlots;
+            this.slots = this.$slots;
             return h('div');
         },
         created() {
@@ -81,14 +89,30 @@
         },
         methods: {
             addCol() {
-                this.$parent.addCol(this.column);
+                if (typeof this.$parent.addCol === 'function'){
+                    this.$parent.addCol(Object.assign({}, this.column, {
+                        scopedSlots: this.scopedSlots,
+                        slots: this.slots
+                    }));
+                }
             },
             updateCol() {
-                this.$parent.updateCol(this.column);
+                if (typeof this.$parent.addCol === 'function'){
+                    this.$parent.updateCol(Object.assign({}, this.column, {
+                        scopedSlots: this.scopedSlots,
+                        slots: this.slots
+                    }));
+                }
             }
         },
         watch: {
             column() {
+                this.updateCol();
+            },
+            slots(){
+                this.updateCol();
+            },
+            scopedSlots(){
                 this.updateCol();
             }
         }

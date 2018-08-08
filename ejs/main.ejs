@@ -14,6 +14,17 @@
 </head>
 <body>
 <div id="app">
+  <adc-test>
+    <div slot-scope="{index}">{{index}}</div>
+  </adc-test>
+  <adc-table-column prop="name"
+                        name="名称"
+                        width="">
+                        <div slot-scope="{index}">
+                            {{index}}
+                          <button type="button" class="btn btn-sm btn-danger">button in slot</button>
+                        </div>
+      </adc-table-column>
   <div class="mb10">
     <button type="button" class="btn btn-sm btn-primary" @click="getChecked">
       获取选中的项
@@ -46,10 +57,14 @@
       <adc-table-column prop="name"
                         name="名称"
                         width="">
+                        <template slot-scope="{data, item, index}">
+                          <button type="button" class="btn btn-sm btn-danger" @click="clickSlot(data, item, index)">button in scopedSlot</button>
+                        </template>
       </adc-table-column>
       <adc-table-column prop="age"
                         name="年龄"
                         width="" :visible="visibleFilter" filter="a" :class-name="className">
+                        <button type="button" class="btn btn-sm btn-primary">button in slot</button>
       </adc-table-column>
       <adc-table-column prop="order"
                         name="排序"
@@ -70,8 +85,17 @@
 
       </adc-table-column>
       <adc-table-column name="操作"
-                        width="200"
-                        :vm="vms.operator">
+                        width="200">
+                        <template slot-scope="{data, item, index}">
+                            <button type="button" class="btn btn-sm btn-primary" @click="edit(item, index)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                                编辑
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                查看
+                            </button>
+                        </template>
       </adc-table-column>
     </adc-table>
   </div>

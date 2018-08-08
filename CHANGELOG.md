@@ -14,6 +14,8 @@
 
 - 修改 在getChecked中返回值由{allChecked: Boolean, checked: Array}改为{checkAll: Boolean, checked: Array}
 
+- 优化 支持slot和scopedSlot
+
 ### 4.0.1
 
 *2018-03-29*

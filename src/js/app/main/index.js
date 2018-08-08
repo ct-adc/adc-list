@@ -10,7 +10,7 @@ import A from './component/a.vue';
 import B from './component/b.vue';
 import utility from 'ct-utility';
 import loading from 'ct-adc-loading';
-
+import Test from 'test';
 
 Vue.component('adc-table-operator', Buttons);
 Vue.component('adc-img', Img);
@@ -96,7 +96,8 @@ new Vue({
         'adc-table-column': column,
         'adc-table': table,
         'aaa': A,
-        'bbb': B
+        'bbb': B,
+        'adc-test': Test
     },
     el: '#app',
     data: {
@@ -159,6 +160,12 @@ new Vue({
         }, 1000);
     },
     methods: {
+        clickSlot(data, item, index){
+            console.log(data, item, index);
+        },
+        edit(item, index) {
+            console.log(item, index);
+        },  
         getChecked() {
             console.log(this.$refs.table.getChecked());
         },
@@ -181,10 +188,7 @@ new Vue({
             this.selection = {
                 checkAll: false,
                 checked: []
-                // checkAll: false,
-                // checked: [0, 1]
             };
-            // this.selection.checked = [0, 1];
         }
     }
 });

@@ -152,7 +152,15 @@
                     const tds = this.column.map(col => {
                         const visible = this.colIsVisible(col, item, index);
 
-                        if (visible.indexOf(true) > -1) {
+                        if (col.slots.default){
+                            return h('td', col.slots.default);
+                        } else if (col.scopedSlots.default){
+                            return h('td', [col.scopedSlots.default({
+                                data: item[col.prop], 
+                                item, 
+                                index
+                            })]);
+                        } else if (visible.indexOf(true) > -1) {
                             if (col.vm.name !== '') {
                                 const vm = h(col.vm.name, {
                                     props: {
