@@ -68,6 +68,18 @@ className为Array时格式如下：
 ]
 ```
 
+### table-column插槽
+
+table-column中支持普通插槽和作用域插槽，均为默认插槽，无需指定名字。
+
+作用域插槽中可以拿到3个数据：分别是当前td中的值(需绑定prop属性)，所在行的数据，所在行的索引
+```
+<template slot-scope="{data, item, index}">
+    <button type="button" class="btn btn-sm btn-danger" @click="clickSlot(data, item, index)">button in scopedSlot</button>
+</template>
+```
+
+
 ### 方法属性的说明
 
 可为方法的属性有: visible, filter, className;
@@ -76,16 +88,6 @@ className为Array时格式如下：
 
 方法的参数统一为 data, item, index, key，分别为当前项的值、当前行的值、当前项的索引、当前项的key。
 
-
-#### vm
-
-#### vm.name
-
-自定义组件的名称
-
-#### vm.config
-
-自定义组件的配置项
 
 ## 方法说明
 
