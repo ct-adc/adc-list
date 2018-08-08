@@ -2,7 +2,7 @@
 
 ### 4.1.0
 
-*todo*
+*2018-08-08*
 
 - 删除 删除initialAllChecked / initialChecked属性
 
