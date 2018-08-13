@@ -2,15 +2,12 @@
  * @author rubyisapm
  */
 import Vue from 'vue';
-import {table, column} from 'index.js';
+import {table, column} from '../../../component/index.js';
 import Img from 'common/adc-img.vue';
 import Buttons from 'common/buttons.vue';
 import RtInput from 'common/rt-input.vue';
-import A from './component/a.vue';
-import B from './component/b.vue';
 import utility from 'ct-utility';
 import loading from 'ct-adc-loading';
-import Test from 'test';
 
 Vue.component('adc-table-operator', Buttons);
 Vue.component('adc-img', Img);
@@ -94,10 +91,7 @@ const tableData = [
 new Vue({
     components: {
         'adc-table-column': column,
-        'adc-table': table,
-        'aaa': A,
-        'bbb': B,
-        'adc-test': Test
+        'adc-table': table
     },
     el: '#app',
     data: {
