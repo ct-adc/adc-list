@@ -58,8 +58,9 @@
         },
         data(){
             return {
-                slots: this.$slots,
-                scopedSlots: this.$scopedSlots
+                defaultSlots: this.$slots.default,
+                tdScopedSlot: this.$scopedSlots.default,
+                thScopedSlot: this.$slots.th
             };
         },
         computed: {
@@ -80,8 +81,9 @@
             }
         },
         render(h) {
-            this.scopedSlots = this.$scopedSlots;
-            this.slots = this.$slots;
+            this.tdScopedSlot = this.$scopedSlots.default;
+            this.defaultSlots = this.$slots.default;
+            this.thScopedSlot = this.$scopedSlots.th;
             return h('div');
         },
         created() {
@@ -91,16 +93,17 @@
             addCol() {
                 if (typeof this.$parent.addCol === 'function'){
                     this.$parent.addCol(Object.assign({}, this.column, {
-                        scopedSlots: this.scopedSlots,
-                        slots: this.slots
+                        tdScopedSlot: this.tdScopedSlot,
+                        defaultSlots: this.defaultSlots
                     }));
                 }
             },
             updateCol() {
                 if (typeof this.$parent.addCol === 'function'){
                     this.$parent.updateCol(Object.assign({}, this.column, {
-                        scopedSlots: this.scopedSlots,
-                        slots: this.slots
+                        tdScopedSlot: this.tdScopedSlot,
+                        defaultSlots: this.defaultSlots,
+                        thScopedSlot: this.thScopedSlot
                     }));
                 }
             }
@@ -109,10 +112,13 @@
             column() {
                 this.updateCol();
             },
-            slots(){
+            defaultSlots(){
                 this.updateCol();
             },
-            scopedSlots(){
+            tdScopedSlot(){
+                this.updateCol();
+            },
+            thScopedSlot(){
                 this.updateCol();
             }
         }

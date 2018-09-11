@@ -84,12 +84,20 @@ className为Array时格式如下：
 
 ### table-column插槽
 
-table-column中支持普通插槽和作用域插槽，均为默认插槽，无需指定名字。
+table-column中对于td的内容支持普通插槽和作用域插槽，均为默认插槽，无需指定名字。
 
 作用域插槽中可以拿到3个数据：分别是当前td中的值(需绑定prop属性)，所在行的数据，所在行的索引
 ```
 <template slot-scope="{data, item, index}">
     <button type="button" class="btn btn-sm btn-danger" @click="clickSlot(data, item, index)">button in scopedSlot</button>
+</template>
+```
+
+table-column中对于th的内容支持作用域插槽，该插槽名字为th
+
+```
+<template slot="th" slot-scope="{index}">
+    哈哈哈from slot{{index}}
 </template>
 ```
 

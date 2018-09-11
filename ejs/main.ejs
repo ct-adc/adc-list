@@ -46,6 +46,9 @@
       <adc-table-column prop="name"
                         name="名称"
                         width="">
+                        <template slot="th" slot-scope="{index}">
+                          哈哈哈from slot{{index}}
+                        </template>
                         <template slot-scope="{data, item, index}">
                           <button type="button" class="btn btn-sm btn-danger" @click="clickSlot(data, item, index)">button in scopedSlot</button>
                         </template>
@@ -53,6 +56,10 @@
       <adc-table-column prop="age"
                         name="年龄"
                         width="" :visible="visibleFilter" filter="a" :class-name="className">
+                        <template slot="th" slot-scope="{index}">
+                          哈哈哈from slot{{index}}
+                        </template>
+                        <template>ejiejfiejfiejfi</template>
       </adc-table-column>
       <adc-table-column prop="order"
                         name="排序"

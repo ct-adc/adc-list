@@ -63,7 +63,13 @@
                 }
                 return <col/>;
             });
-            const ths = this.column.map(col => {
+            const ths = this.column.map((col, index) => {
+                if (col.thScopedSlot){
+                    return h('th', [col.thScopedSlot({
+                        index: index
+                    })]);
+                    
+                }
                 if (col.name !== '') {
                     return <th>{col.name}</th>;
                 }
@@ -152,10 +158,10 @@
                     const tds = this.column.map(col => {
                         const visible = this.colIsVisible(col, item, index);
 
-                        if (col.slots.default){
-                            return h('td', col.slots.default);
-                        } else if (col.scopedSlots.default){
-                            return h('td', [col.scopedSlots.default({
+                        if (col.defaultSlots){
+                            return h('td', col.defaultSlots);
+                        } else if (col.tdScopedSlot){
+                            return h('td', [col.tdScopedSlot({
                                 data: item[col.prop], 
                                 item, 
                                 index
