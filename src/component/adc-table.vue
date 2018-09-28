@@ -143,9 +143,7 @@
                 this.checked = JSON.parse(JSON.stringify(this.selection));
                 const allChecked = this.data.length >0 && _.difference(this.data.map(item=>item[this.selectionKey]), this.checked).length === 0 && this.checked.length === this.data.length;
 
-                if (allChecked){
-                    this.allChecked = true;
-                }
+                this.allChecked = allChecked;
             },
             colIsVisible(col, item, index){
                 const visible = [
