@@ -1,5 +1,6 @@
 <script type="text/jsx">
     import Vue from 'vue';
+    import _ from 'lodash';
 
     export default {
         name: 'adc-table',
@@ -15,13 +16,18 @@
                 }
             },
             selection: {
-                type: Object,
+                type: Array,
                 default(){
-                    return {
-                        checkAll: false,
-                        checked: []
-                    }
+                    return [];
                 }
+            },
+            selectionKey: {
+                type: String,
+                default: ''
+            },
+            selectionSave: {
+                type: Boolean,
+                default: false
             },
             status: {
                 type: Boolean,
@@ -132,16 +138,13 @@
         },
         methods: {
             initChecked(){
-                this.allChecked = this.selection.checkAll;
-                if (this.allChecked) {
-                    const checked = [];
+                const checked = [];
 
-                    for (let i = 0; i < this.data.length; i++) {
-                        checked.push(i);
-                    }
-                    this.checked = checked;
-                } else {
-                    this.checked = this.selection.checked;
+                this.checked = JSON.parse(JSON.stringify(this.selection));
+                const allChecked = this.data.length >0 && _.difference(this.data.map(item=>item[this.selectionKey]), this.checked).length === 0 && this.checked.length === this.data.length;
+
+                if (allChecked){
+                    this.allChecked = true;
                 }
             },
             colIsVisible(col, item, index){
@@ -180,7 +183,7 @@
 
                                 return <td>{vm}</td>;
                             } else if (col.type === 'selection') {
-                                const checked = this.checked.indexOf(index) > -1 || this.allChecked;
+                                const checked = this.checked.indexOf(this.data[index][this.selectionKey]) > -1;
                                 const checkbox = h('input', {
                                     type: 'checkbox',
                                     attrs: {
@@ -271,45 +274,39 @@
             // 选中/取消选中所有项
             checkAll() {
                 this.allChecked = !this.allChecked;
-                if (this.allChecked) {
-                    const checked = [];
+                const checked = [];
 
-                    for (let i = 0; i < this.data.length; i++) {
-                        checked.push(i);
+                for (let i = 0; i < this.data.length; i++) {
+                    checked.push(this.data[i][this.selectionKey]);
+                }
+                if (this.allChecked) {
+                    if (this.selectionSave){
+                        this.checked = _.unionWith(this.checked, checked);
+                    } else {
+                        this.checked = checked;
                     }
-                    this.checked = checked;
                 } else {
-                    this.checked = [];
+                    this.checked = _.differenceWith(this.checked, checked);
                 }
                 this.$emit('check-all', this.allChecked);
-                if (this.allChecked){
-                    this.$emit('change', {
-                        checkAll: this.allChecked
-                    });
-                } else {
-                    this.$emit('change', {
-                        checkAll: this.allChecked,
-                        checked: this.checked
-                    });
-                }
+                this.$emit('change', this.checked);
             },
             // 选中/取消选中一项
             checkOne(index) {
                 return (e) => {
-                    if (e.target.checked && !this.checked.indexOf(index) > -1) {
-                        this.checked.push(index);
-                        this.allChecked = this.checked.length === this.data.length;
+                    var targetKey = this.data[index][this.selectionKey];
+
+                    if (e.target.checked && !this.checked.indexOf(targetKey) > -1) {
+                        this.checked.push(targetKey);
+                        const allChecked = this.data.length >0 && _.difference(this.data.map(item=>item[this.selectionKey]), this.checked).length === 0 && this.checked.length === this.data.length;
+                        
+                        this.allChecked = allChecked;
                     } else {
-                        this.checked = this.checked.filter(item => {
-                            return item !== index;
-                        });
+                        this.checked = _.without(this.checked, targetKey);
                         this.allChecked = false;
                     }
-                    this.$emit('check', {index: index, checked: e.target.checked});
-                    this.$emit('change', {
-                        checkAll: this.allChecked,
-                        checked: this.checked
-                    });
+                    this.$emit('check', {index: index, key: targetKey, checked: e.target.checked});
+                    this.$emit('change', this.checked);
                 };
             },
             getChecked() {
@@ -319,23 +316,19 @@
                  * @return {Boolean} {}.checkAll 是否选中了所有
                  * @return {Array} {}.checked 选中项的索引(从0开始)
                  */
-                if (this.allChecked) {
-                    return {
-                        checkAll: true
-                    };
-                }
-                return {
-                    checkAll: false,
-                    checked: this.checked
-                };
+                return this.checked;
             }
         },
         watch: {
-            'selection.checkAll'(){
+            selection(){
                 this.initChecked();
             },
-            'selection.checked'(){
-                this.initChecked();
+            data(newVal){
+                if (!this.selectionSave){
+                    this.checked = _.intersection(this.checked, newVal.map(item=>item[this.selectionKey]));
+                    // 触发initChecked来更新allChecked
+                    this.initChecked();
+                }
             }
         }
     };

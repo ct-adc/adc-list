@@ -37,6 +37,8 @@
       v-loading="loading" 
       class-name="table-bordered table-striped" 
       v-model="selection"
+      selection-key="id"
+      :selection-save="false"
       @check-all="checkAll" 
       @check="checkOne">
       <adc-table-column type="selection" visible>
@@ -93,6 +95,7 @@
                         </template>
       </adc-table-column>
     </adc-table>
+    <pagination :curr-page="pageIndex" :total="tableData.length" :page-size="4" @change-page="changePage"></pagination>
   </div>
   <!-- <div v-show="table!=='table1'">
     table2

@@ -1,5 +1,13 @@
 ## 更新日志
 
+### 4.3.0
+
+*2018-09-28*
+
+- 新增 selectionKey selectionSave
+
+- 修改 selection中不再存储索引，而是存储数据中的selectionKey
+
 ### 4.2.0
 
 *2018-09-11*

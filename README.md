@@ -38,6 +38,8 @@ checked | 选中状态 | Object | 否 | {checkAll: false, checked: []}
 loading | 加载状态 | Boolean | 非必填 | false
 status | 表格数据响应状态(成功/失败) | Boolean | 非必填 | true
 msg | 显示信息(status为true时为提示信息(如'请点击搜索按钮'),status为false时为出错信息(如'请求失败')) | String | 非必填 | ''
+selectionKey | 复选框选中/取消选中数据时依据的主键 | String | 需要渲染selection时为必填 | ''
+selectionSave | 改变数据时(如翻页)是否保存复选框的选中状态 | Boolean | 非必填 | false
 
 ### table-column配置项
 
@@ -74,10 +76,7 @@ className为Array时格式如下：
 默认值: 
 
 ```
-{
-    checkAll: false,
-    checked: []
-}
+[]
 ```
 
 当指定了selection列且按以上形式双向绑定后，则当selection中的选中项发生变化时，则可同步到父组件。
@@ -119,11 +118,9 @@ table-column中对于th的内容支持作用域插槽，该插槽名字为th
 
 **描述:** 获取选中项
 
-**返回值** {}
+**返回值** []
 
-{}.checkAll 是否全选
-
-{}.checked 一个数组；为选中项的索引集合
+为选中项的索引集合
 
 ## 事件说明
 
@@ -132,7 +129,7 @@ table-column中对于th的内容支持作用域插槽，该插槽名字为th
 事件名称 | 说明 | 回调参数 | 描述
 --- | --- | --- | --- 
 check-all | 全选被选中/取消选中 | 是否被全选: Boolean | 全选被选中/取消选中触发的事件
-check | 单项选中/取消选中 | {index: Number, checked: Boolean} | 单项选中/取消选中触发的事件
+check | 单项选中/取消选中 | {index: Number, key: [该行数据中的selectionKey], checked: Boolean} | 单项选中/取消选中触发的事件
 
 ## Q & A
 
